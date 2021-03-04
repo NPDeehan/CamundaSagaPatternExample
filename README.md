@@ -8,7 +8,7 @@ It involves 3 groups of independend components.
 1. JavaScript Microservice Workers
 
 Camunda Run is at the center of everything. The modeles are deployed to it and the services are resigster for work to it.
-![Overview](./img/overview.png)
+![Overview](./img/Overview.png)
 
 ## Installation
 As I mentioned there are three components and each needing to be installed (but it's all pretty easy)
