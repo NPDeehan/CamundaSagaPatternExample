@@ -8,7 +8,24 @@ It involves 3 groups of independend components.
 1. JavaScript Microservice Workers
 
 Camunda Run is at the center of everything. The modeles are deployed to it and the services are resigster for work to it.
+
 ![Overview](./img/Overview.png)
+
+## Understanding the Components
+
+## The Camunda Platform Run
+This is a Spring Boot application that contains the Camunda Engine, The Camunda Webapps and The REST API.
+
+You can deploy processes to it via the modeler, start process instance, administrate them and step through them as an end user.
+
+## The BPMN Process Models
+There are two process modeles in this repo. The first shows how a series of services and be used to book a holiday.
+
+![book a holiday ](./Models/BookHolidayV1.png)
+
+The second model has the same hotel booking feature, with the addtion of being able to reverse the actions made based on the user's choice.
+
+![Book a holiday saga](./Models/BookHolidaySagaPatternV2.png)
 
 ## Installation
 As I mentioned there are three components and each needing to be installed (but it's all pretty easy)
