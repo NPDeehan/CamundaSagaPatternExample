@@ -1,6 +1,6 @@
 # Camunda Saga Pattern Example
 
-This is an example of how to model the Saga partter by taking a distributed group of microservices and have them orchestrated asyncronousely using Camunda and BPMN. 
+This is an example of how to model the Saga Pattern by taking a distributed group of microservices and have them orchestrated asynchronously using Camunda and BPMN. 
 
 It involves 3 groups of independend components. 
 1. The Camunda Platform Run
