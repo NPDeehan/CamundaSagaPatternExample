@@ -28,7 +28,7 @@ execution.setVariable("HotelBookingStatus", "No Booking Made");</camunda:script>
       <bpmn:incoming>Flow_0wcb6gl</bpmn:incoming>
       <bpmn:outgoing>Flow_1e75ewe</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_0fy5rid" name="Book Flight" camunda:modelerTemplate="1ef1787c-ca78-4094-be55-4bce8957c80d" camunda:modelerTemplateVersion="1614700260539" camunda:asyncAfter="true" camunda:type="external" camunda:topic="BookFlight">
+    <bpmn:serviceTask id="Activity_0fy5rid" name="Book Flight" camunda:asyncAfter="true" camunda:type="external" camunda:topic="BookFlight">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:outputParameter name="FlightBookingID">${FlightBookingID}</camunda:outputParameter>

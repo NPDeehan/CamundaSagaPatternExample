@@ -9,24 +9,28 @@ const config = { baseUrl: "http://localhost:8080/engine-rest", use: logger, asyn
 // create a Client instance with custom configuration
 const client = new Client(config);
 
-// susbscribe to the topic: 'creditScoreChecker'
+// susbscribe to the topic: 'BookFlight'
 client.subscribe("BookFlight", async function({ task, taskService }) { 
   // Put your business logic
   await new Promise(r => setTimeout(r, 2000));
   // complete the task
 
+ // Create variables to be returned to the process
  const processVariables = new Variables();
   processVariables.set("FlightBookingStatus", "Confirmed");
   processVariables.set("FlightBookingID", create_UUID());
-
+// Complete the task
   await taskService.complete(task, processVariables);
 });
 
+// susbscribe to the topic: 'CancelFlightBooking'
 client.subscribe("CancelFlightBooking", async function({ task, taskService }) {
+  // Just a little sleep method to show that some work is doing done
   await new Promise(r => setTimeout(r, 2000));
-  //complete Task 
+  // create variables to be sent back
   const processVariables = new Variables();
   processVariables.set("FlightBookingStatus", "Canceled");
+  // complete task
   await taskService.complete(task, processVariables);
 });
 

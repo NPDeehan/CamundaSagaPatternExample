@@ -9,21 +9,22 @@ const config = { baseUrl: "http://localhost:8080/engine-rest", use: logger, asyn
 // create a Client instance with custom configuration
 const client = new Client(config);
 
-// susbscribe to the topic: 'creditScoreChecker'
+// susbscribe to the topic: 'BookTrain'
 client.subscribe("BookTrain", async function({ task, taskService }) { 
-  // Put your business logic
-  // complete the task
-
+  // Put your business logic and create variables
  const processVariables = new Variables();
   processVariables.set("TrainBookingStatus", "Confirmed");
   processVariables.set("TrainBookingID", create_UUID());
-
+ // complete the task
   await taskService.complete(task, processVariables);
 });
 
+// susbscribe to the topic: 'CancelTrainBooking'
 client.subscribe("CancelTrainBooking", async function({ task, taskService }) { 
+  //create variables
   const processVariables = new Variables();
   processVariables.set("TrailBookingStatus", "Canceled");
+  //complete the task
   await taskService.complete(task, processVariables);
 });
 

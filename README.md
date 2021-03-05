@@ -27,6 +27,48 @@ The second model has the same hotel booking feature, with the addtion of being a
 
 ![Book a holiday saga](./Models/BookHolidaySagaPatternV2.png)
 
+The importand addtion is the use of compensation in the process. A `Compensation Throw Event` is thrown and any task that had been previously completed and has a `Compensation Catch Event`attached to it will running the `Compensation Task`linked to it. Thus implementing the Saga Pattern.
+
+You can find out more details about [compensation and BPMN in the docs.](https://docs.camunda.org/manual/7.14/reference/bpmn20/events/cancel-and-compensation-events/#compensation-events) 
+
+## The External Task Workers (Microservices)
+These are independent services written in java script which subscripe to the Camunda Patform for a `Topic`. The services will then be given any work for that topic. It works be defining the topic as part of the model and then having the worker subscripte to the topic of the same name. 
+
+The model semandics are descriped as follows:
+![External Service Task](./img/ExternalServiceTask.png)
+
+The Worker then needs to subscribe to the same topic - In this case it's `BookFlight`
+```JavaScript
+// susbscribe to the topic: 'BookFlight'
+client.subscribe("BookFlight", async function({ task, taskService }) { 
+  // Put your business logic
+  await new Promise(r => setTimeout(r, 2000));
+  // complete the task
+
+ // Create variables to be returned to the process
+ const processVariables = new Variables();
+  processVariables.set("FlightBookingStatus", "Confirmed");
+  processVariables.set("FlightBookingID", create_UUID());
+// Complete the task
+  await taskService.complete(task, processVariables);
+});
+```
+
+Workers can often subscribe to more than one topic, especially in the case where the work falls into the same context or responsibility. In this example the worker responsible for making a booking is also responsibile for canceling a booking. So the worker has a second subscription.
+
+```JavaScript
+// susbscribe to the topic: 'CancelFlightBooking'
+client.subscribe("CancelFlightBooking", async function({ task, taskService }) {
+  // Just a little sleep method to show that some work is doing done
+  await new Promise(r => setTimeout(r, 2000));
+  // create variables to be sent back
+  const processVariables = new Variables();
+  processVariables.set("FlightBookingStatus", "Canceled");
+  // complete task
+  await taskService.complete(task, processVariables);
+});
+```
+
 ## Installation
 As I mentioned there are three components and each needing to be installed (but it's all pretty easy)
 
@@ -72,3 +114,5 @@ node ./FlightBooking.js
 node ./TrainBooking.js
 ```
 
+### @TODO Optional Components.
+Optimize and Cawemo
